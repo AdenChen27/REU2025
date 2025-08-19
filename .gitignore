@@ -1,0 +1,5 @@
+aux/
+Readings/
+
+*.DS_Store
+*.synctex.gz
