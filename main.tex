@@ -1,6 +1,8 @@
 \documentclass[oneside,reqno,letterpaper]{amsart}
 \usepackage{/Users/aden/Library/CloudStorage/Box-Box/latex/adenc}
 % \AddToHook{cpd/section/before}{\clear page}
+\usepackage{xspace}
+
 \input{preamble.tex}
 
 \usepackage{biblatex}
@@ -134,9 +136,9 @@ This is sufficient for proving existence for the Kantorovich problem, but we sta
   In particular, if \(X\) and \(Y\) are Polish and \(\mu \in \Pspace(X)\), \(\nu \in \Pspace(Y)\), then \(\Pi(\mu, \nu)\) is relatively compact in the weak topology.
 \end{proposition}
 
-The other ingredient of the existence proof, that \(\Kan\) is lower semi-continuous, is an easy consequence of the following approximation theorem:
+The other ingredient of the existence proof, that \(\Kan\) is lower semicontinuous (\lsc), is an easy consequence of the following approximation theorem:
 \begin{lemma}\label{prop:lsc-approx-by-uc}
-  Let \(f\) be a nonnegative lower semi-continuous function on a metric space \(X\).
+  Let \(f\) be a nonnegative \lsc function on a metric space \(X\).
   Then, there exists a sequence \((f_n)_{n \in \NN}\) of bounded nonnegative uniformly continuous functions converging pointwise monotonically to \(f\).
 \end{lemma}
 \begin{proof}
@@ -149,7 +151,7 @@ The other ingredient of the existence proof, that \(\Kan\) is lower semi-continu
 
   Finally, we show that \(f_n\) converges to \(f\) pointwise.
   Fix any \(x \in X\).
-  By \(f\) being lower semi-continuous, for each \(\varepsilon > 0\), there exists some \(\delta > 0\) such that \(f(y) \geq f(x) - \epsilon\) for all \(y \in B(x, \delta)\).
+  By \(f\) being \lsc, for each \(\varepsilon > 0\), there exists some \(\delta > 0\) such that \(f(y) \geq f(x) - \epsilon\) for all \(y \in B(x, \delta)\).
   Find large \(N\) such that \(N \delta > f(x)\).
   We have when \(y \notin B(x, \delta)\) that
   \[
@@ -165,8 +167,14 @@ The other ingredient of the existence proof, that \(\Kan\) is lower semi-continu
   Thus \(\lim_{n \to \infty} f_n(x) \geq f_N(x) \geq f(x) - \varepsilon\).
   We send \(\varepsilon \to 0\) to conclude the proof.
 \end{proof}
-\begin{corollary}\label{prop:kan-lsc}
-  The functional \(\Kan\) is lower semi-continuous in the weak topology if the cost \(c\) is lower semi-continuous.
+\begin{corollary}\label{prop:Kan-lsc}
+  Let \(c\) be \lsc, and let \(\cM \subset \Pspace(X)\) and \(\cN \subset \Pspace(Y)\) be tight.
+  The functional
+  \[
+    \Kan(\gamma) \coloneqq \int_{X \times Y} c(x, y) \dd \gamma
+  \]
+  is \lsc in the weak topology on the set \(\left\{\gamma \in \Pi(\mu, \nu) : \mu \in \cM, \nu \in \cN \right\}\).
+  In particular, if \(X, Y\) are Polish, then \(\Kan\) is weakly \lsc on \(\Pi(\mu, \nu)\) for any \(\mu \in \Pspace(X)\), \(\nu \in \Pspace(Y)\).
 \end{corollary}
 \begin{proof}
   Let \(c_n\) be the sequence of bounded continuous functions constructed in \Cref{prop:lsc-approx-by-uc} converging pointwise monotonically to \(c\).
@@ -174,21 +182,21 @@ The other ingredient of the existence proof, that \(\Kan\) is lower semi-continu
   \[
     \Kan_n(\gamma) \coloneqq \int c_n(x, y) \dd \gamma(x, y)
   \]
-  is continuous and in particular lower semi-continuous in the weak topology.
+  is continuous and in particular \lsc in the weak topology.
   The Monotone Convergence Theorem implies that \(\Kan_n \to \Kan\) pointwise.
   Since \(\Kan_n\) is nondecreasing in \(n\), we actually have \(\Kan = \sup_n \Kan_n\). % is actually the pointwise supremum of \(\Kan_n\).
-  As the pointwise supremum of lower semi-continuous functions, \(\Kan\) is lower semi-continuous.
+  As the pointwise supremum of \lsc functions, \(\Kan\) is lower semi-continuous.
 \end{proof}
 
 
 We are now equipped to prove the existence of an optimal transport plan.
-\begin{theorem}[Kantorovich]\label{prop:kan-existence}
-  Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c\) be a lower semi-continuous cost function.\todo{Do \(\RR^d\) instead?}
+\begin{theorem}[Kantorovich]\label{prop:Kan-existence}
+  Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c\) be a \lsc cost function.\todo{Do \(\RR^d\) instead?}
 \end{theorem}
 \begin{proof}
   Let \((\gamma_n)_{n \in \NN} \subseteq \Pi(\mu, \nu)\) be a minimizing sequence for the Kantorovich problem.
   Up to extraction of a subsequence, we may assume that \(\gamma_n \weakto \gamma\) for some \(\gamma \in \Pi(\mu, \nu)\).
-  By \Cref{prop:kan-lsc}, \(\inf \Kan = \liminf_n \Kan(\gamma_n) \geq \Kan(\gamma)\).
+  By \Cref{prop:Kan-lsc}, \(\inf \Kan = \liminf_n \Kan(\gamma_n) \geq \Kan(\gamma)\).
   In particular, \(\gamma\) achieves the infimum.
   % It remains to show that \(\gamma\) achieves the infimum.
   % Note that the weak convergence already implies that \(\inf \Kan = \lim_n \Kan(\gamma_n) = \Kan(\gamma)\) in the case where \(c \in C_b(X \times Y)\).
@@ -196,8 +204,8 @@ We are now equipped to prove the existence of an optimal transport plan.
   % When \(c \notin C_b(X \times Y)\), we can use \Cref{prop:lsc-approx-by-uc} to construct a sequence \(c_m\) of bounded continuous functions such that \(c_m \nearrow c\).
   % For each \(m\), define \(\Kan_m(\gamma) \coloneqq \int c_m(x, y) \dd \gamma\) to be the cost functional associated to the cost \(c_m\).
   % By the monotone convergence theorem, we have that \(\Kan\) is the pointwise supremum of the sequence \((\Kan_m)_{m \in \NN}\).
-  % We have just seen that \(\Kan_m\) is continuous and in particular lower semi-continuous in the weak topology.
-  % It follows thus that \(\Kan = \sup_m \Kan_m\) is always lower semi-continuous, whence
+  % We have just seen that \(\Kan_m\) is continuous and in particular \lsc in the weak topology.
+  % It follows thus that \(\Kan = \sup_m \Kan_m\) is always \lsc, whence
   % \[
   %   \inf \Kan = \liminf_n \Kan(\gamma_n) \geq \Kan(\gamma).
   % \]
@@ -206,7 +214,7 @@ We are now equipped to prove the existence of an optimal transport plan.
 
 Conditions for the existence of optimal transport maps for the Monge problem are much more delicate.
 We state below a set of sufficient conditions and omit the proof:
-\begin{theorem}[Gangbo, McCann]\label{prop:mon-existence}
+\begin{theorem}[Gangbo, McCann]\label{prop:Mon-existence}
   Let \(\mu, \nu \in \Pspace(\RR^d)\) and \(c\) be a strictly convex, superlinear cost function such that the total transport cost from \(\mu\) to \(\nu\) is not always infinite.
   Assume moreover that \(\mu\) is absolutely continuous with respect to the Lebesgue measure.
   Then, the optimal transport plan is unique and induced by a transport map.
@@ -222,8 +230,8 @@ We state below a set of sufficient conditions and omit the proof:
 Under suitable conditions, we can show that \(\Kan\) is a relaxation of \(\Mon\) in the following sense:
 \begin{definition}[Relaxation]
   Let \(F: X \to \RR \cup \left\{+\infty\right\}\) be a functional bounded from below.
-  Its \vocab{relaxation} \(\overline{F}\) is the maximal lower semi-continuous functional such that \(\overline{F} \leq F\).
-  The relaxation is well-defined since the pointwise supremum of any family of lower semi-continuous functionals is lower semi-continuous.
+  Its \vocab{relaxation} \(\overline{F}\) is the maximal \lsc functional such that \(\overline{F} \leq F\).
+  The relaxation is well-defined since the pointwise supremum of any family of \lsc functionals is lower semi-continuous.
 \end{definition}
 
 The following observation gives the significance of the relaxation:
@@ -233,7 +241,7 @@ The following observation gives the significance of the relaxation:
 \end{proposition}
 \begin{proof}
   From the definition above, we have \(\overline{F} \leq F\) pointwise and thus \(\inf \overline{F} \leq \inf F\).
-  For the opposite inequality, note that the constant functional \(x \mapsto \inf F\) is lower semi-continuous and bounded above by \(F\).
+  For the opposite inequality, note that the constant functional \(x \mapsto \inf F\) is \lsc and bounded above by \(F\).
   Since \(\overline{F}\) is the maximal such functional, we have \(\overline{F} \geq \inf F\) pointwise and so \(\inf \overline{F} \geq \inf F\).
 \end{proof}
 
@@ -256,7 +264,7 @@ And so the optimal transport plan for the Kantorovich problem is given by \(\gam
 \begin{itodo}
 A set of sufficient conditions for Kantorovich is the following:
 \(X\), \(Y\) Polish.
-\(c\) lower semi-continuous.
+\(c\) \lsc.
 \(\mu\) atomless.
 \end{itodo}
 
@@ -269,8 +277,8 @@ A set of sufficient conditions for Kantorovich is the following:
 }
 
 \begin{theorem}[Kantorovich Duality]
-  Let \(X\), \(Y\) be Polish and \(c\) be a lower semi-continuous cost function.
-  % Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c: X \times Y \to \RR_+ \cup \left\{+ \infty \right\}\) be lower semi-continuous.
+  Let \(X\), \(Y\) be Polish and \(c\) be a \lsc cost function.
+  % Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c: X \times Y \to \RR_+ \cup \left\{+ \infty \right\}\) be \lsc.
   Let \(\varphi_c\) consist of all pairs \((\varphi, \psi) \in L^1(d\mu) \times L^1(d\nu)\) such that
   \[
     \varphi(x) + \psi(y) \leq c(x, y)
@@ -289,8 +297,8 @@ A set of sufficient conditions for Kantorovich is the following:
 
 
 
-\begin{theorem}[Kantorovich-Rubinstein]
-  Let \(X = Y\) be Polish and endowed with a lower semi-continuous metric \(d\).
+\begin{theorem}[Kantorovich-Rubinstein]\label{prop:Kan-Rub}
+  Let \(X = Y\) be Polish and endowed with a \lsc metric \(d\).
   Let \(\Lip(X)\) denote the space of all Lipschitz functions on \(X\), and
   \[
     \norm{\varphi}_{\Lip}
@@ -324,16 +332,19 @@ This, as we will see in the next proposition, will ensure the finiteness of the 
   \coloneqq \left( C_{d^p}(\mu, \nu) \right)^{1/p}
   = \left( \min_{\gamma \in \Pi(\mu, \nu)} \int_{\Omega \times \Omega} \abs{x - y}^p \dd \gamma(x, y) \right)^{1/p}.
 \]
-Here, the existence of the \(\min\) is established by \Cref{prop:kan-existence}.
+Here, the existence of the \(\min\) is established by \Cref{prop:Kan-existence}.
 The space \(\Pspace_p(\Omega)\) endowed with the (to be proven) metric \(W_p\) is called the \vocab{Wasserstein space of order \(p\)}.
 
-A few immediate observations can be made at this point:
-\begin{proposition}~
+Before proving that \(W_p\) is a distance, we first state a few immediate observations:
+\begin{proposition}\label{prop:Wdist-top-equiv}~
   \begin{enumerate}[label=(\roman*)]
     \item If \(\mu, \nu \in \Pspace_p(\Omega)\), then \(W_p(\mu, \nu) < +\infty\).
     \item\label{item:Wspace-relation-ii} If \(1 \leq p \leq q\), then \(\Pspace_q(\Omega) \subset \Pspace_p(\Omega)\) and \(W_p(\mu, \nu) \leq W_q(\mu, \nu)\).
-    \item When \(\Omega\) is bounded, \(\Pspace_p(\Omega) = \Pspace(\Omega)\) for all \(p \geq 1\).
-      Moreover, there exists a constant \(C > 0\) such that \(W_p^p(\mu, \nu) \leq C W_1(\mu, \nu)\).
+    \item When \(\Omega\) is bounded, \(\Pspace_p(\Omega) = \Pspace(\Omega)\) for all \(p \geq 1\), and
+      \[
+        W_1(\mu, \nu) \leq W_p(\mu, \nu) \leq \diam(\Omega)^{\frac{p - 1}{p}} W_1(\mu, \nu)^{\frac{1}{p}}.
+      \]
+      In particular, each \(W_p\) induce the same topology on \(\Pspace(\Omega)\).
   \end{enumerate}
 \end{proposition}
 \begin{proof}~
@@ -359,9 +370,10 @@ A few immediate observations can be made at this point:
           \leq \left( \int \abs{x - y}^q \dd \gamma \right)^{\frac{p}{q}}
           = W_q(\mu, \nu)^p.
         \]
-      \item From \ref{item:Wspace-relation-ii} we have that \(\Pspace_p(\Omega) \subset \Pspace(\Omega)\).
-        The reverse inclusion is given by \(\int \abs{x}^p \dd \mu \leq \diam(\Omega)^p\).
-        Now, if \(\gamma\) is an optimal transport plan for \(W_1(\mu, \nu)\), then
+      \item
+        In light of \ref{item:Wspace-relation-ii}, we need only prove \(\Pspace(\Omega) \subset \Pspace_p(\Omega)\) and the second equality.
+        The inclusion is given by \(\int \abs{x}^p \dd \mu \leq \diam(\Omega)^p\).
+        For the inequality, let \(\gamma\) be an optimal transport plan for \(W_1(\mu, \nu)\) and note that
         \[
           W_p^p(\mu, \nu)
           \leq \int \abs{x - y}^p \dd \gamma
@@ -412,15 +424,33 @@ Positive definiteness and symmetry are quite easy:
 
 Establishing the triangle inequality is more involved.
 We will deal with the cases \(p = 1\) and \(p > 1\) separately.
-For \(p = 1\), the Kantorovich-Rubinstein theorem will be our main point of attack.
-For \(p > 1\), we will leverage the strict convexity of the cost.
+The case \(p = 1\) follows from the Kantorovich-Rubinstein Theorem quite easily.
+For \(p > 1\), we will leverage the strict convexity of the cost and use \Cref{prop:Mon-existence}.
 
-\subsection{Triangular Inequality: The case \texorpdfstring{\(p = 1\)}{p = 1}}
-\draftnote[TODO]{TODO}
+\subsubsection{Triangular Inequality: The case \texorpdfstring{\(p = 1\)}{p = 1}}
+\begin{proposition}
+  The function \(W_1\) satisfies the triangle inequality.
+\end{proposition}
+\begin{proof}
+Starting from the identity
+\[
+  \int_{\Omega} \varphi \dd (\mu - \nu)
+  = \int_{\Omega} \varphi \dd (\mu - \rho) + \int_{\Omega} \varphi \dd (\rho - \nu)
+\]
+we have
+\begin{align*}
+  W_1(\mu, \nu)
+  &= \sup_{\norm{\varphi} \leq 1} \int_{\Omega} \varphi \dd (\mu - \nu) \\
+  &\leq \sup_{\norm{\varphi} \leq 1} \int_{\Omega} \varphi \dd (\mu - \rho)
+    + \sup_{\norm{\varphi} \leq 1} \int_{\Omega} \varphi \dd (\rho - \nu) \\
+  &= W_1(\mu, \rho) + W_1(\rho, \nu),
+\end{align*}
+where the equalities follow from the Kantorovich-Rubinstein Theorem (\Cref{prop:Kan-Rub}).
+\end{proof}
 
 
-\subsection{Triangular Inequality: The case \texorpdfstring{\(p \in (1, +\infty)\)}{p > 1}}
-When \(\mu\) and \(\rho\) are both absolutely continuous with respect to the Lebesgue measure, optimal transport maps exist by \Cref{prop:mon-existence}, and we can rather easily reduce the problem to triangle inequality in the \(L^p\) space.
+\subsubsection{Triangular Inequality: The case \texorpdfstring{\(p \in (1, +\infty)\)}{p > 1}}
+When \(\mu\) and \(\rho\) are both absolutely continuous with respect to the Lebesgue measure, optimal transport maps exist by \Cref{prop:Mon-existence}, and we can rather easily reduce the problem to triangle inequality in the \(L^p\) space.
 When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely continuous measures obtained by convolution, and pass to the limit with aid from the following lemma:
 
 \begin{lemma}\label{prop:Wdist-convolution}
@@ -428,7 +458,7 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
   Write \(\mu_{\varepsilon} \coloneqq \mu * \chi_{\varepsilon}\) and \(\nu_{\varepsilon} \coloneqq \nu * \chi_{\varepsilon}\).
   We have
   \begin{enumerate}[label=(\roman*)]
-    \item \(W_p(\mu_{\varepsilon}, \nu_{\epsilon}) \leq W_p(\mu, \nu)\), \todo{I guess I don't need this part of the result?}
+    \item \(W_p(\mu_{\varepsilon}, \nu_{\epsilon}) \leq W_p(\mu, \nu)\),
     \item \(\lim_{\varepsilon \to 0} W_p(\mu_{\epsilon}, \nu_{\epsilon}) = W_p(\mu, \nu)\).
   \end{enumerate}
 \end{lemma}
@@ -515,7 +545,7 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
     = \lim \Kan(\gamma_{\varepsilon_{n_k}})
     \geq \Kan(\gamma) \geq W_p(\mu, \nu),
   \]
-  where the equality comes from how we selected the subsequence \(\varepsilon_{n_k}\), the first inequality from \Cref{prop:kan-lsc}, and the second inequality from \(\gamma\) being an admissible transport plan.
+  where the equality comes from how we selected the subsequence \(\varepsilon_{n_k}\), the first inequality from \Cref{prop:Kan-lsc}, and the second inequality from \(\gamma\) being an admissible transport plan.
   Since \(W_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq W_p(\mu, \nu)\) for each \(\varepsilon\), we conclude that \(\lim W_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n}) = W_p(\mu, \nu)\).
 \end{proof}
 
@@ -526,7 +556,7 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
 \begin{proof}
   \todo{add}
   Finally, to show triangular inequality, we suppose first that \(\mu\) and \(\rho\) are absolutely continuous.
-  By \Cref{prop:mon-existence} there exists optimal transport maps \(S\) and \(T\) such that \(\rho = S_{\#} \nu\) and \(\nu = T_{\#} \rho\).
+  By \Cref{prop:Mon-existence} there exists optimal transport maps \(S\) and \(T\) such that \(\rho = S_{\#} \nu\) and \(\nu = T_{\#} \rho\).
   Since \((T \circ S)_{\#} \mu = T_{\#} \rho = \nu\), \(T \circ S\) is a transport map from \(\mu\) to \(\nu\).
   Thus we have
   \begin{align*}
@@ -549,6 +579,18 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
 
 
 \subsection{Topology of the Wasserstein Space}
+As with dealing with the triangular inequality, we will split into the case \(p = 1\) and \(p \in (1, +\infty)\).
+\draftnote[TODO]{Add}
+
+\begin{theorem}
+  If \(\Omega \subset \RR^d\) is bounded and \(p \in [1, +\infty)\), then \(W_p(\mu_n, \mu) \to 0\) if and only if \(\mu_n \weakto \mu\).
+\end{theorem}
+
+
+\begin{theorem}
+  Let \(p \in [1, +\infty)\).
+  We have \(W_p(\mu_n, \mu) \to 0\) if and only if \(\mu_n \weakto \mu\) and \(\int \abs{x}^p \dd \mu_n \to \int \abs{x}^p \dd \mu\).
+\end{theorem}
 
 
 
