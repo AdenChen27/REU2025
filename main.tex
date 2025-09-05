@@ -595,14 +595,87 @@ As with dealing with the triangular inequality, we will split into the case \(p 
 
 
 
-
-
 \section{Curves and Geodesics in the Metric Space}
+\subsection{Curves}
+\begin{definition}[Curve, Speed]
+  A \vocab{curve} \(\omega\) is a continuous function defined on \([0, 1]\) and valued in a metric space \((X, d)\).
+  \begin{itemize}
+    \item Its \vocab{length} is defined as
+      \[
+        \length(\omega)
+        \coloneqq \sup\left\{\sum_{k = 0}^{k - 1} d(\omega(t_k), \omega(t_{k + 1})): n \geq 1, 0 = t_0 < t_1 < \dots < t_n = 1 \right\}.
+      \]
+    \item Its \vocab{speed} \(\abs{\omega'}\) is defined as
+      \[
+        \abs{\omega'}(t) \coloneqq \lim_{h \to 0} \frac{d(\omega(t + h), \omega(t))}{\abs{h}},
+      \]
+      if the limit exists.
+    \item The curve \(\omega\) is said to be \vocab{absolutely continuous} if there exists a \(g \in L^1\) such that
+      \[
+        d(\omega(s), \omega(t)) \leq \int_s^t g(r) \dd r, \quad \forall s, t \in [0, 1], s \leq t.
+      \]
+      The set of all absolutely continuous curves is denoted by \(\AC(X)\).
+  \end{itemize}
+\end{definition}
+
+
+\begin{remark}~
+  \begin{itemize}
+    \item The Rademacher theorem implies that the speed exists for a.e.\ \(t\).
+    \item If \(\omega\) is absolutely continuous, then it has finite length bounded above by \(\int_0^1 g(r) \dd r\).
+      \item For any curve \(\omega \in \AC(X)\), we have \(\length(\omega) = \int_0^1 \abs{\omega'}(t) \dd t\).
+  \end{itemize}
+\end{remark}
+
+
+\begin{proposition}
+  Absolutely continuous curves can be reparametrized in time to be Lipschitz.
+\end{proposition}
+
+
+\subsection{Geodesics}
+
+\begin{definition}[Geodesic, Geodesic Space]
+  A curve \(\omega: [0, 1] \to X\) is a \vocab{geodesic} between \(x_0, x_1 \in X\) if it minimizes the length among all curves such that \(\omega(0) = x_0\) and \(\omega(1) = x_1\).
+  It is said to be a \vocab{constant speed geodesic} if for each \(s, t \in [0, 1]\) we have
+  \[
+    d(\omega(s), \omega(t)) = \abs{s - t} d(\omega(0), \omega(1)).
+  \]
+  A metric space is a \vocab{geodesic space} if for each \(x, y \in X\) there exists a geodesic connecting \(x\) and \(y\).
+\end{definition}
+
+\begin{proposition}
+  Fix \(p > 1\) and consider curves connecting \(x_0\) to \(x_1\).
+  The following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item \(\omega\) is a constant speed geodesic,
+    \item \(\omega \in \AC(X)\) and \(\abs{\omega'}(t) = d(x_0, x_1)\) for a.e.\ \(t\),
+    \item \(\omega\) solves \(\min\left\{\int_0^1 \abs{\omega'}(t)^p \dd t: \omega(0) = x_0, \omega(1) = x_1 \right\}\).
+  \end{enumerate}
+\end{proposition}
+
+
+
+\subsection{The Continuity Equation}
+\begin{definition}[Weak Solutions of the Continuity Equation]
+\end{definition}
+
+\begin{proposition}
+Equivalence of weak and distributional solutions to the CE.
+\end{proposition}
+
+
 
 
 
 
 \section{AC curves in the Wasserstein Space and the Benamou-Brenier Formula}
+\begin{theorem}
+  Let \((\mu_t)_{t \in [0, 1]}\) be an absolutely continuous curve in \(\Wspace(\Omega)\), where \(p > 1\) and \(\Omega \subset \RR^d\) is compact.
+  For a.e.\ \(t\), there exists a vector field \(v_t \in L^p(\mu_t; \RR^d)\) such that the continuity equation \(\partial_t \mu_t + \divg (v_t \mu_t) = 0\) is satisfied in the weak sense, and for a.e.\ \(t\) we have \(\norm{v_t}_{L^p(\mu_t)} \leq \abs{\mu'}(t)\).
+
+  Conversely, if \((\mu_t)_{t \in [0, 1]}\) is a family of measures in \(\Pspace_p(\Omega)\) and for each \(t\) we have a vector field \(v_t \in L^p(\mu_t; \RR^d)\) with \(\int_0^1 \abs{v_t}_{L^p(\mu_t)} \dd t < +\infty\) solving \(\partial_t \mu_t + \divg (v_t \mu_t) = 0\), then \((\mu_t)_t\) is absolutely continuous in \(\Wspace(\Omega)\) and for a.e.\ \(t\), we have \(\abs{\mu'}(t) \leq \norm{v_t}_{L^p(\mu_t)}\).
+\end{theorem}
 
 
 
