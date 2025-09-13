@@ -56,9 +56,6 @@ The first version of the optimal transport problem, the \vocab{Kantorovich probl
   The infimum cost for cost \(c\) will be denoted by \(\OTcost_c(\mu, \nu)\).
 \end{problem*}
 
-\begin{itodo}
-  linearity
-\end{itodo}
 
 
 The Kantorovich problem can be considered as a relaxation of a related, and historically earlier, version of the optimal transport problem, the \vocab{Monge problem}.
@@ -106,11 +103,12 @@ we choose a sequence \(\gamma_n \in \Pi(\mu, \nu)\) such that \(\Kan(\gamma_n) \
 
 The compactness of \(\Pi(\mu, \nu)\) will be given by Prokhorov's theorem, which we now recall:
 \begin{theorem}[Prokhorov]\label{prop:prokhorov}
-  Let \((X, d)\) be a complete separable metric space.\todo{can we improve this to Polish?}
-A set \(\cM \subset \Pspace(X)\) is relatively compact in the weak topology if and only if it is \vocab{tight}, that is, for every \(\varepsilon > 0\), there exists a compact set \(K \subset X\) such that \(\sup_{\mu \in \cM} \mu(K^\complement) < \epsilon\).
+  Let \((X, d)\) be a complete separable metric space.\todo{check if can improve to Polish}
+  A set \(\cM \subset \Pspace(X)\) is relatively compact in the weak topology if and only if it is \vocab{tight}, that is, for every \(\varepsilon > 0\), there exists a compact set \(K \subset X\) such that \(\sup_{\mu \in \cM} \mu(K^\complement) < \epsilon\).
 \end{theorem}
 \begin{proof}
-  See \cite[Theorem 7.9]{Zitkovic2013weak}.\todo{Find reference that proves compactness instead of just sequential compactness.}
+  See \cite[Theorem 7.9]{Zitkovic2013weak}.
+  \draftnote[TODO]{Find reference that proves compactness instead of just sequential compactness.}
 \end{proof}
 
 When \(X, Y \subset \RR^d\), by considering the increasing sequence \(([-n, n]^d)_{n \in \NN} \nearrow \RR^d\), we can find compact sets \(K_X \subset X\) and \(K_Y \subset Y\) such that \(\mu(K_X^\complement), \nu(K_Y^\complement) < \varepsilon / 2\).
@@ -136,10 +134,10 @@ This is sufficient for proving existence for the Kantorovich problem, but we sta
   In particular, if \(X\) and \(Y\) are Polish and \(\mu \in \Pspace(X)\), \(\nu \in \Pspace(Y)\), then \(\Pi(\mu, \nu)\) is relatively compact in the weak topology.
 \end{proposition}
 
-The other ingredient of the existence proof, that \(\Kan\) is lower semicontinuous (\lsc), is an easy consequence of the following approximation theorem:
+The other ingredient of the existence proof, that \(\Kan\) is lower semicontinuous (l.s.c.), is an easy consequence of the following approximation theorem:
 \begin{lemma}\label{prop:lsc-approx-by-uc}
-  Let \(f\) be a nonnegative \lsc function on a metric space \(X\).
-  Then, there exists a sequence \((f_n)_{n \in \NN}\) of bounded nonnegative uniformly continuous functions converging pointwise monotonically to \(f\).
+  Let \(f\) be a nonnegative l.s.c.\ function on a metric space \(X\).
+  Then, there exists a sequence \((f_n)_{n \in \NN}\) of bounded nonnegative Lipschitz functions converging pointwise monotonically to \(f\).
 \end{lemma}
 \begin{proof}
   For each \(n\), define
@@ -147,11 +145,11 @@ The other ingredient of the existence proof, that \(\Kan\) is lower semicontinuo
     f_n(x) \coloneqq \inf_{y \in X} \left\{ f(y) + n d(x, y) \right\}.
   \]
   It is clear that each \(f_n\) is nonnegative and \(f_n(x)\) is nondecreasing in \(n\) for each \(x\).
-  As the upper envelope of \(n\)-Lipschitz functions, each \(f_n\) is also \(n\)-Lipschitz and thus uniformly continuous.
+  As the upper envelope of \(n\)-Lipschitz functions, each \(f_n\) is also \(n\)-Lipschitz.
 
   Finally, we show that \(f_n\) converges to \(f\) pointwise.
   Fix any \(x \in X\).
-  By \(f\) being \lsc, for each \(\varepsilon > 0\), there exists some \(\delta > 0\) such that \(f(y) \geq f(x) - \epsilon\) for all \(y \in B(x, \delta)\).
+  By \(f\) being l.s.c.\, for each \(\varepsilon > 0\), there exists some \(\delta > 0\) such that \(f(y) \geq f(x) - \epsilon\) for all \(y \in B(x, \delta)\).
   Find large \(N\) such that \(N \delta > f(x)\).
   We have when \(y \notin B(x, \delta)\) that
   \[
@@ -168,30 +166,32 @@ The other ingredient of the existence proof, that \(\Kan\) is lower semicontinuo
   We send \(\varepsilon \to 0\) to conclude the proof.
 \end{proof}
 \begin{corollary}\label{prop:Kan-lsc}
-  Let \(c\) be \lsc, and let \(\cM \subset \Pspace(X)\) and \(\cN \subset \Pspace(Y)\) be tight.
-  The functional
-  \[
-    \Kan(\gamma) \coloneqq \int_{X \times Y} c(x, y) \dd \gamma
-  \]
-  is \lsc in the weak topology on the set \(\left\{\gamma \in \Pi(\mu, \nu) : \mu \in \cM, \nu \in \cN \right\}\).
-  In particular, if \(X, Y\) are Polish, then \(\Kan\) is weakly \lsc on \(\Pi(\mu, \nu)\) for any \(\mu \in \Pspace(X)\), \(\nu \in \Pspace(Y)\).
+  If \(f\) is a l.s.c.\, bounded below function on a metric space \(X\), then the functional \(F: \mu \mapsto \int f \dd \mu\) is lower semi-continuous on \(\Pspace(X)\).
+  In particular, if \(c\) is l.s.c.\ and bounded below, then the functional \(\Kan\) is l.s.c.
+  % Let \(c\) be l.s.c.\, and let \(\cM \subset \Pspace(X)\) and \(\cN \subset \Pspace(Y)\) be tight.
+  % The functional
+  % \[
+  %   \Kan(\gamma) \coloneqq \int_{X \times Y} c(x, y) \dd \gamma
+  % \]
+  % is l.s.c.\ in the weak topology on the set \(\left\{\gamma \in \Pi(\mu, \nu) : \mu \in \cM, \nu \in \cN \right\}\).
+  % In particular, if \(X, Y\) are Polish, then \(\Kan\) is weakly l.s.c.\ on \(\Pi(\mu, \nu)\) for any \(\mu \in \Pspace(X)\), \(\nu \in \Pspace(Y)\).
 \end{corollary}
 \begin{proof}
-  Let \(c_n\) be the sequence of bounded continuous functions constructed in \Cref{prop:lsc-approx-by-uc} converging pointwise monotonically to \(c\).
+  Let \(f_n\) be the sequence of bounded continuous functions constructed in \Cref{prop:lsc-approx-by-uc} converging pointwise monotonically to \(f\).
   For each \(n\), the functional
   \[
-    \Kan_n(\gamma) \coloneqq \int c_n(x, y) \dd \gamma(x, y)
+    F_n(\mu) \coloneqq \int f_n(x, y) \dd \mu
   \]
-  is continuous and in particular \lsc in the weak topology.
-  The Monotone Convergence Theorem implies that \(\Kan_n \to \Kan\) pointwise.
-  Since \(\Kan_n\) is nondecreasing in \(n\), we actually have \(\Kan = \sup_n \Kan_n\). % is actually the pointwise supremum of \(\Kan_n\).
-  As the pointwise supremum of \lsc functions, \(\Kan\) is lower semi-continuous.
+  is continuous and in particular l.s.c.\ in the weak topology.
+  Using the Monotone Convergence Theorem we may deduce that \(F_n \to F\) pointwise.
+  Since \(F_n\) is nondecreasing in \(n\), we actually have \(F = \sup_n F_n\).
+  As the pointwise supremum of l.s.c.\ functions, \(\Kan\) is lower semi-continuous.
 \end{proof}
 
 
 We are now equipped to prove the existence of an optimal transport plan.
 \begin{theorem}[Kantorovich]\label{prop:Kan-existence}
-  Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c\) be a \lsc cost function.\todo{Do \(\RR^d\) instead?}
+  Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c\) be a l.s.c.\ cost function.
 \end{theorem}
 \begin{proof}
   Let \((\gamma_n)_{n \in \NN} \subseteq \Pi(\mu, \nu)\) be a minimizing sequence for the Kantorovich problem.
@@ -204,8 +204,8 @@ We are now equipped to prove the existence of an optimal transport plan.
   % When \(c \notin C_b(X \times Y)\), we can use \Cref{prop:lsc-approx-by-uc} to construct a sequence \(c_m\) of bounded continuous functions such that \(c_m \nearrow c\).
   % For each \(m\), define \(\Kan_m(\gamma) \coloneqq \int c_m(x, y) \dd \gamma\) to be the cost functional associated to the cost \(c_m\).
   % By the monotone convergence theorem, we have that \(\Kan\) is the pointwise supremum of the sequence \((\Kan_m)_{m \in \NN}\).
-  % We have just seen that \(\Kan_m\) is continuous and in particular \lsc in the weak topology.
-  % It follows thus that \(\Kan = \sup_m \Kan_m\) is always \lsc, whence
+  % We have just seen that \(\Kan_m\) is continuous and in particular l.s.c.\ in the weak topology.
+  % It follows thus that \(\Kan = \sup_m \Kan_m\) is always l.s.c.\, whence
   % \[
   %   \inf \Kan = \liminf_n \Kan(\gamma_n) \geq \Kan(\gamma).
   % \]
@@ -230,8 +230,8 @@ We state below a set of sufficient conditions and omit the proof:
 Under suitable conditions, we can show that \(\Kan\) is a relaxation of \(\Mon\) in the following sense:
 \begin{definition}[Relaxation]
   Let \(F: X \to \RR \cup \left\{+\infty\right\}\) be a functional bounded from below.
-  Its \vocab{relaxation} \(\overline{F}\) is the maximal \lsc functional such that \(\overline{F} \leq F\).
-  The relaxation is well-defined since the pointwise supremum of any family of \lsc functionals is lower semi-continuous.
+  Its \vocab{relaxation} \(\overline{F}\) is the maximal l.s.c.\ functional such that \(\overline{F} \leq F\).
+  The relaxation is well-defined since the pointwise supremum of any family of l.s.c.\ functionals is lower semi-continuous.
 \end{definition}
 
 The following observation gives the significance of the relaxation:
@@ -241,7 +241,7 @@ The following observation gives the significance of the relaxation:
 \end{proposition}
 \begin{proof}
   From the definition above, we have \(\overline{F} \leq F\) pointwise and thus \(\inf \overline{F} \leq \inf F\).
-  For the opposite inequality, note that the constant functional \(x \mapsto \inf F\) is \lsc and bounded above by \(F\).
+  For the opposite inequality, note that the constant functional \(x \mapsto \inf F\) is l.s.c.\ and bounded above by \(F\).
   Since \(\overline{F}\) is the maximal such functional, we have \(\overline{F} \geq \inf F\) pointwise and so \(\inf \overline{F} \geq \inf F\).
 \end{proof}
 
@@ -264,7 +264,7 @@ And so the optimal transport plan for the Kantorovich problem is given by \(\gam
 \begin{itodo}
 A set of sufficient conditions for Kantorovich is the following:
 \(X\), \(Y\) Polish.
-\(c\) \lsc.
+\(c\) l.s.c.
 \(\mu\) atomless.
 \end{itodo}
 
@@ -272,18 +272,10 @@ A set of sufficient conditions for Kantorovich is the following:
 
 
 \subsection{Kantorovich Duality and the Kantorovich-Rubinstein Theorem}
-\todo{
-  I want to mention the sketch proofs of these two results since they are used in later on.
-}
-
 \begin{theorem}[Kantorovich Duality]
-  Let \(X\), \(Y\) be Polish and \(c\) be a \lsc cost function.
-  % Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c: X \times Y \to \RR_+ \cup \left\{+ \infty \right\}\) be \lsc.
-  Let \(\varphi_c\) consist of all pairs \((\varphi, \psi) \in L^1(d\mu) \times L^1(d\nu)\) such that
-  \[
-    \varphi(x) + \psi(y) \leq c(x, y)
-  \]
-  for \(\mu\)-a.e.\ \(x \in X\) and \(\nu\)-a.e.\ \(y \in Y\).
+  Let \(X\), \(Y\) be Polish and \(c\) be a l.s.c.\ cost function.
+  % Let \(X\) and \(Y\) be Polish, \(\mu \in \Pspace(X)\) and \(\nu \in \Pspace(Y)\), and \(c: X \times Y \to \RR_+ \cup \left\{+ \infty \right\}\) be l.s.c.\.
+  Let \(\varphi_c\) consist of all pairs \((\varphi, \psi) \in L^1(d\mu) \times L^1(d\nu)\) such that \(\varphi(x) + \psi(y) \leq c(x, y)\) for \(\mu\)-a.e.\ \(x \in X\) and \(\nu\)-a.e.\ \(y \in Y\).
   Then,
   \[
     % \inf_{\gamma \in \Pi(\mu, \nu)} \int_{X \times Y} c(x, y) \dd \gamma(x, y)
@@ -291,29 +283,51 @@ A set of sufficient conditions for Kantorovich is the following:
     = \sup_{(\varphi, \psi) \in \Phi_c} \left( \int_X \phi(x) \dd \mu(x) + \int_Y \psi(y) \dd \nu(y) \right).
   \]
 \end{theorem}
-\begin{itodo}
-  A formal proof here.
-\end{itodo}
-
+We provide in the following a formal proof, which shows how the \(\sup\) appears via a minimax principle.
+The full proof of this theorem is quite involved and can be found in \cite[pp.\ 26--33]{Villani2003}.
+\begin{proof}[A Formal Proof]
+  We note first the following:
+  for a measure \(\gamma\) on \(X \times Y\), we have
+  \[
+    \sup_{\varphi} \int \varphi(x) \dd \mu - \int \varphi(x) \dd \gamma
+    = \begin{cases}
+      0, & \gamma \text{ has first marginal } \mu, \\
+      + \infty, & \text{otherwise},
+    \end{cases}
+  \]
+  and a similar result for the second marginal of \(\gamma\).
+  We can thus rephrase the Kantorovich problem as
+  \[
+    \inf_{\gamma \in \Pi(\mu, \nu)} \int c \dd \gamma
+    = \inf_{\gamma} \sup_{(\varphi, \psi)} \int c \dd \gamma + \int \varphi \dd \mu + \int \psi \dd \nu - \int \varphi(x) + \psi(y) \dd \gamma,
+  \]
+  and then by formally exchanging the \(\inf\) and \(\sup\) as
+  \[
+    \sup_{(\varphi, \psi)} \left[ \int \varphi \dd \mu + \int \psi \dd \nu 
+      + \inf_{\gamma} \int c \dd \gamma - \int \varphi(x) + \psi(y) \dd \gamma \right].
+  \]
+  Now, it remains to note that
+  \[
+    \inf_{\gamma} \int c \dd \gamma - \int \varphi(x) + \psi(y) \dd \gamma
+    = \begin{cases}
+      0, & (\varphi, \psi) \in \Phi_c, \\
+      -\infty, & \text{otherwise}.
+    \end{cases}
+  \]
+\end{proof}
 
 
 \begin{theorem}[Kantorovich-Rubinstein]\label{prop:Kan-Rub}
-  Let \(X = Y\) be Polish and endowed with a \lsc metric \(d\).
-  Let \(\Lip(X)\) denote the space of all Lipschitz functions on \(X\), and
-  \[
-    \norm{\varphi}_{\Lip}
-    \coloneqq \sup_{x \neq y} \frac{\abs{\varphi(x) - \phi(y)}}{d(x, y)}.
-  \]
+  Let \(X = Y\) be Polish and endowed with a l.s.c.\ metric \(d\).
+  Let \(\Lip_1(X)\) denote the space of all 1-Lipschitz functions on \(X\).
   Then,
   \[
     \OTcost_d(\mu, \nu)
-    = \sup\left\{ \int_X \varphi \dd (\mu - \nu); \quad \phi \in L^1(d \abs{\mu - \nu}); \quad \norm{\varphi}_{\Lip} \leq 1 \right\}.
+    = \sup\left\{ \int_X \varphi \dd (\mu - \nu): \quad \phi \in L^1(\d \mu) \cap L^1(\d \nu) \cap L^1(\d \abs{\mu - \nu}) \cap \Lip_1 \right\}.
   \]
+  \todo{add conditions for existence of optimizers}
 \end{theorem}
-\begin{itodo}
-\begin{proof}
-\end{proof}
-\end{itodo}
+\draftnote[TODO]{Add proof}
 
 
 
@@ -328,25 +342,27 @@ When \(\Omega\) is unbounded, we will restrict our attention to the subset of \(
 \]
 This, as we will see in the next proposition, will ensure the finiteness of the \vocab{Wasserstein distance of order \(p\)}, defined by
 \[
-  W_p(\mu, \nu)
-  \coloneqq \left( C_{d^p}(\mu, \nu) \right)^{1/p}
+  \Wdist_p(\mu, \nu)
+  \coloneqq \left( \OTcost_{d^p}(\mu, \nu) \right)^{1/p}
   = \left( \min_{\gamma \in \Pi(\mu, \nu)} \int_{\Omega \times \Omega} \abs{x - y}^p \dd \gamma(x, y) \right)^{1/p}.
 \]
 Here, the existence of the \(\min\) is established by \Cref{prop:Kan-existence}.
-The space \(\Pspace_p(\Omega)\) endowed with the (to be proven) metric \(W_p\) is called the \vocab{Wasserstein space of order \(p\)}.
+The space \(\Pspace_p(\Omega)\) endowed with the (to be proven) metric \(\Wdist_p\) is called the \vocab{Wasserstein space of order \(p\)} and denoted \(\Wspace_p(\Omega)\).
 
-Before proving that \(W_p\) is a distance, we first state a few immediate observations:
+Before proving that \(\Wdist_p\) is a distance, we first state a few immediate observations:
 \begin{proposition}\label{prop:Wdist-top-equiv}~
   \begin{enumerate}[label=(\roman*)]
-    \item If \(\mu, \nu \in \Pspace_p(\Omega)\), then \(W_p(\mu, \nu) < +\infty\).
-    \item\label{item:Wspace-relation-ii} If \(1 \leq p \leq q\), then \(\Pspace_q(\Omega) \subset \Pspace_p(\Omega)\) and \(W_p(\mu, \nu) \leq W_q(\mu, \nu)\).
-    \item When \(\Omega\) is bounded, \(\Pspace_p(\Omega) = \Pspace(\Omega)\) for all \(p \geq 1\), and
+    \item If \(\mu, \nu \in \Pspace_p(\Omega)\), then \(\Wdist_p(\mu, \nu) < +\infty\).
+    \item\label{item:Wspace-relation-ii} If \(1 \leq p \leq q\), then \(\Pspace_q(\Omega) \subset \Pspace_p(\Omega)\) and \(\Wdist_p(\mu, \nu) \leq \Wdist_q(\mu, \nu)\).
+    \item\label{item:Wspace-relation-iii} When \(\Omega\) is bounded, \(\Pspace_p(\Omega) = \Pspace(\Omega)\) for all \(p \geq 1\), and
       \[
-        W_1(\mu, \nu) \leq W_p(\mu, \nu) \leq \diam(\Omega)^{\frac{p - 1}{p}} W_1(\mu, \nu)^{\frac{1}{p}}.
+        \Wdist_1(\mu, \nu) \leq \Wdist_p(\mu, \nu) \leq \diam(\Omega)^{\frac{p - 1}{p}} \Wdist_1(\mu, \nu)^{\frac{1}{p}}.
       \]
-      In particular, each \(W_p\) induce the same topology on \(\Pspace(\Omega)\).
   \end{enumerate}
 \end{proposition}
+\begin{remark}
+  In particular, once we establish the status of \(\Wdist_p\) as a metric, \Cref{item:Wspace-relation-iii} shows that each \(\Wdist_p\) induce the same topology on \(\Pspace(\Omega)\) when \(\Omega\) is bounded.
+\end{remark}
 \begin{proof}~
   \begin{enumerate}[label=(\roman*)]
     \item Let \(\gamma \in \Pspace(\mu, \nu)\) be any transport plan.
@@ -363,49 +379,49 @@ Before proving that \(W_p\) is a distance, we first state a few immediate observ
         \]
         Higher moment finiteness implies lower moment finiteness.
 
-        Similarly, for the second result, let \(\gamma\) be an optimal transport plan for \(W_q(\mu, \nu)\) and we have
+        Similarly, for the second result, let \(\gamma\) be an optimal transport plan for \(\Wdist_q(\mu, \nu)\) and we have
         \[
-          W_p^p(\mu, \nu)
+          \Wdist_p^p(\mu, \nu)
           \leq \int \abs{x - y}^p \dd \gamma
           \leq \left( \int \abs{x - y}^q \dd \gamma \right)^{\frac{p}{q}}
-          = W_q(\mu, \nu)^p.
+          = \Wdist_q(\mu, \nu)^p.
         \]
       \item
         In light of \ref{item:Wspace-relation-ii}, we need only prove \(\Pspace(\Omega) \subset \Pspace_p(\Omega)\) and the second equality.
         The inclusion is given by \(\int \abs{x}^p \dd \mu \leq \diam(\Omega)^p\).
-        For the inequality, let \(\gamma\) be an optimal transport plan for \(W_1(\mu, \nu)\) and note that
+        For the inequality, let \(\gamma\) be an optimal transport plan for \(\Wdist_1(\mu, \nu)\) and note that
         \[
-          W_p^p(\mu, \nu)
+          \Wdist_p^p(\mu, \nu)
           \leq \int \abs{x - y}^p \dd \gamma
           \leq \diam(\Omega)^{p - 1} \int \abs{x - y} \dd \gamma
-          = \diam(\Omega)^{p - 1} W_1(\mu, \nu).
+          = \diam(\Omega)^{p - 1} \Wdist_1(\mu, \nu).
         \]
   \end{enumerate}
 \end{proof}
 
 
-We next turn our attention to establishing that \(W_p\) is indeed a metric on \(\Pspace_p(\Omega)\).
+We next turn our attention to establishing that \(\Wdist_p\) is indeed a metric on \(\Pspace_p(\Omega)\).
 Positive definiteness and symmetry are quite easy:
-\begin{proposition}
+\begin{proposition}\label{prop:Wdist-pos-def-sym}
   Let \(p \in [1, +\infty)\).
-  The function \(W_p\) is symmetric and nonnegative.
-  Moreover, \(W_p(\mu, \nu) = 0\) if and only if \(\mu = \nu\).
+  The function \(\Wdist_p\) is symmetric and nonnegative.
+  Moreover, \(\Wdist_p(\mu, \nu) = 0\) if and only if \(\mu = \nu\).
 \end{proposition}
 \begin{proof}
-  The nonnegativity of \(W_p\) is inherited from that of the cost function.
+  The nonnegativity of \(\Wdist_p\) is inherited from that of the cost function.
   Symmetric is obtained by noting that for each transport plan \(\gamma \in \Pi(\mu, \nu)\), we can define a ``reverse plan'' \(S_{\#} \gamma \in \Pi(\nu, \mu)\), where \(S: \Omega \times \Omega \to \Omega \times \Omega\) is defined by \(S(x, y) \coloneqq (y, x)\).
   We have
   \[
-    W_p^p(\nu, \mu)
+    \Wdist_p^p(\nu, \mu)
     \leq \int \abs{x - y}^p \dd S_{\#} \gamma(x, y)
     = \int \abs{y - x}^p \dd \gamma(x, y).
   \]
-  Taking the infimum over all \(\gamma \in \Pi(\mu, \nu)\) gives \(W_p(\nu, \mu) \leq W_p(\mu, \nu)\).
+  Taking the infimum over all \(\gamma \in \Pi(\mu, \nu)\) gives \(\Wdist_p(\nu, \mu) \leq \Wdist_p(\mu, \nu)\).
   The reverse inequality is obtained by interchanging \(\mu\) and \(\nu\).
 
   Finally, suppose
   \[
-    W_p(\mu, \nu)
+    \Wdist_p(\mu, \nu)
     = \left( \int \abs{x - y}^p \dd \gamma(x, y) \right)^{\frac{1}{p}}
     = 0.
   \]
@@ -428,8 +444,8 @@ The case \(p = 1\) follows from the Kantorovich-Rubinstein Theorem quite easily.
 For \(p > 1\), we will leverage the strict convexity of the cost and use \Cref{prop:Mon-existence}.
 
 \subsubsection{Triangular Inequality: The case \texorpdfstring{\(p = 1\)}{p = 1}}
-\begin{proposition}
-  The function \(W_1\) satisfies the triangle inequality.
+\begin{proposition}\label{prop:Wdist-tri-ineq-p1}
+  The function \(\Wdist_1\) satisfies the triangle inequality.
 \end{proposition}
 \begin{proof}
 Starting from the identity
@@ -439,14 +455,17 @@ Starting from the identity
 \]
 we have
 \begin{align*}
-  W_1(\mu, \nu)
+  \Wdist_1(\mu, \nu)
   &= \sup_{\norm{\varphi} \leq 1} \int_{\Omega} \varphi \dd (\mu - \nu) \\
   &\leq \sup_{\norm{\varphi} \leq 1} \int_{\Omega} \varphi \dd (\mu - \rho)
     + \sup_{\norm{\varphi} \leq 1} \int_{\Omega} \varphi \dd (\rho - \nu) \\
-  &= W_1(\mu, \rho) + W_1(\rho, \nu),
+  &= \Wdist_1(\mu, \rho) + \Wdist_1(\rho, \nu),
 \end{align*}
 where the equalities follow from the Kantorovich-Rubinstein Theorem (\Cref{prop:Kan-Rub}).
 \end{proof}
+
+We note that in the case where \(\Omega\) is bounded, the triangle inequality for \(\Wdist_p\) with \(p > 1\) can be deduced from that of \(\Wdist_1\) using \Cref{prop:Wdist-top-equiv}.
+The general case, however, requires a different argument.
 
 
 \subsubsection{Triangular Inequality: The case \texorpdfstring{\(p \in (1, +\infty)\)}{p > 1}}
@@ -458,13 +477,13 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
   Write \(\mu_{\varepsilon} \coloneqq \mu * \chi_{\varepsilon}\) and \(\nu_{\varepsilon} \coloneqq \nu * \chi_{\varepsilon}\).
   We have
   \begin{enumerate}[label=(\roman*)]
-    \item \(W_p(\mu_{\varepsilon}, \nu_{\epsilon}) \leq W_p(\mu, \nu)\),
-    \item \(\lim_{\varepsilon \to 0} W_p(\mu_{\epsilon}, \nu_{\epsilon}) = W_p(\mu, \nu)\).
+    \item \(\Wdist_p(\mu_{\varepsilon}, \nu_{\epsilon}) \leq \Wdist_p(\mu, \nu)\),
+    \item \(\lim_{\varepsilon \to 0} \Wdist_p(\mu_{\epsilon}, \nu_{\epsilon}) = \Wdist_p(\mu, \nu)\).
   \end{enumerate}
 \end{lemma}
 \begin{proof}~
-  \proofstep{(i) \(W_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq W_p(\mu, \nu)\)}
-  Let \(\gamma\) be the optimal transport plan for \(W_p(\mu, \nu)\).
+  \proofstep{(i) \(\Wdist_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq \Wdist_p(\mu, \nu)\)}
+  Let \(\gamma\) be the optimal transport plan for \(\Wdist_p(\mu, \nu)\).
   We use \(\gamma\) to define a candidate transport plan between \(\mu_{\epsilon}\) and \(\nu_{\epsilon}\).
   The functional
   \[
@@ -489,17 +508,17 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
   An analogous argument shows that the second marginal is \(\nu_{\varepsilon}\).
   Using this transport plan, we have the bound
   \[
-    W_p^p(\mu_{\varepsilon}, \nu_{\varepsilon})
+    \Wdist_p^p(\mu_{\varepsilon}, \nu_{\varepsilon})
     \leq \iint \abs{x - z - y + z}^p \chi_{\varepsilon}(z) \dd z \dd \gamma_{\varepsilon}
     = \int \abs{x - y}^p \dd \gamma_{\varepsilon}
-    = W_p^p(\mu, \nu).
+    = \Wdist_p^p(\mu, \nu).
   \]
 
-  \proofstep{(ii) \(\lim_{\varepsilon \to 0} W_p(\mu_{\varepsilon}, \nu_{\varepsilon}) = W_p(\mu, \nu)\)}
-  The inequality above gives \(\limsup W_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq W_p(\mu, \nu)\).
+  \proofstep{(ii) \(\lim_{\varepsilon \to 0} \Wdist_p(\mu_{\varepsilon}, \nu_{\varepsilon}) = \Wdist_p(\mu, \nu)\)}
+  The inequality above gives \(\limsup \Wdist_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq \Wdist_p(\mu, \nu)\).
   It thus suffices to show
   \[
-    \liminf W_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n}) \geq W_p(\mu, \nu)
+    \liminf \Wdist_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n}) \geq \Wdist_p(\mu, \nu)
   \]
   for an arbitrary sequence \(\varepsilon_n \to 0\).
   This will be done using the lower semi-continuity of \(\Kan\).
@@ -524,8 +543,8 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
   where the inequality follows from the fact that \(K_0 + x \subset K\) for each \(x \in \supp \chi_1 \subset B(0, 1)\).
   The same argument shows that \(\{\nu_{\varepsilon_n}\}\) is tight.
 
-  Now let \(\gamma_{\varepsilon_n}\) be the optimal transport plan for \(W_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n})\) and note that we have \(\mu_{\varepsilon_n} \weakto \mu\) and \(\nu_{\varepsilon_n} \weakto \nu\).
-  We a pick subsequence that attains \(\liminf W_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n})\), and, by \Cref{prop:couplings-of-tight-is-tight}, a further subsequence \(\varepsilon_{n_k}\) such that \(\gamma_{\varepsilon_{n_k}}\) converges weakly to some \(\gamma\).
+  Now let \(\gamma_{\varepsilon_n}\) be the optimal transport plan for \(\Wdist_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n})\) and note that we have \(\mu_{\varepsilon_n} \weakto \mu\) and \(\nu_{\varepsilon_n} \weakto \nu\).
+  We a pick subsequence that attains \(\liminf \Wdist_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n})\), and, by \Cref{prop:couplings-of-tight-is-tight}, a further subsequence \(\varepsilon_{n_k}\) such that \(\gamma_{\varepsilon_{n_k}}\) converges weakly to some \(\gamma\).
   We check that \(\gamma \in \Pi(\mu, \nu)\):
   for each \(\varphi \in C_b(\Omega)\), we have by a change of variable that
   \[
@@ -541,37 +560,40 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
 
   We now have
   \[
-    \liminf W_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n})
+    \liminf \Wdist_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n})
     = \lim \Kan(\gamma_{\varepsilon_{n_k}})
-    \geq \Kan(\gamma) \geq W_p(\mu, \nu),
+    \geq \Kan(\gamma) \geq \Wdist_p(\mu, \nu),
   \]
   where the equality comes from how we selected the subsequence \(\varepsilon_{n_k}\), the first inequality from \Cref{prop:Kan-lsc}, and the second inequality from \(\gamma\) being an admissible transport plan.
-  Since \(W_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq W_p(\mu, \nu)\) for each \(\varepsilon\), we conclude that \(\lim W_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n}) = W_p(\mu, \nu)\).
+  Since \(\Wdist_p(\mu_{\varepsilon}, \nu_{\varepsilon}) \leq \Wdist_p(\mu, \nu)\) for each \(\varepsilon\), we conclude that \(\lim \Wdist_p(\mu_{\varepsilon_n}, \nu_{\varepsilon_n}) = \Wdist_p(\mu, \nu)\).
 \end{proof}
 
 
 \begin{theorem}
-  \(W_p\) is a metric on \(\Pspace_p(\Omega)\) for each \(p \geq 1\).
+  \(\Wdist_p\) is a metric on \(\Pspace_p(\Omega)\) for each \(p \geq 1\).
 \end{theorem}
 \begin{proof}
-  \todo{add}
-  Finally, to show triangular inequality, we suppose first that \(\mu\) and \(\rho\) are absolutely continuous.
+  The nonnegativity, symmetry, and positive definiteness of \(\Wdist_p\) are given by \Cref{prop:Wdist-pos-def-sym}.
+  Triangle inequality for \(p = 1\) is given by \Cref{prop:Wdist-tri-ineq-p1}.
+  We deal with the case \(p \in (1, +\infty)\).
+
+  First, suppose first that \(\mu\) and \(\rho\) are absolutely continuous.
   By \Cref{prop:Mon-existence} there exists optimal transport maps \(S\) and \(T\) such that \(\rho = S_{\#} \nu\) and \(\nu = T_{\#} \rho\).
   Since \((T \circ S)_{\#} \mu = T_{\#} \rho = \nu\), \(T \circ S\) is a transport map from \(\mu\) to \(\nu\).
   Thus we have
   \begin{align*}
-    W_p(\mu, \nu)
+    \Wdist_p(\mu, \nu)
     \leq \left( \int \abs{T \circ S - \Id}^p \dd \mu \right)^{1 / p}
     &\leq \left( \int \abs{S - \Id}^p \dd \mu \right)^{1 / p} + \left( \int \abs{T \circ S - S}^p \dd \mu \right)^{1 / p} \\
     &= \left( \int \abs{S - \Id}^p \dd \mu \right)^{1 / p} + \left( \int \abs{T - \Id}^p \dd \rho \right)^{1 / p} \\
-    &= W_p^p(\mu, \rho) + W_p^p(\rho, \nu),
+    &= \Wdist_p^p(\mu, \rho) + \Wdist_p^p(\rho, \nu),
   \end{align*}
   where the second inequality follows from the triangular inequality for \(L^p(\mu)\), and the second line follows from a change of variable.
 
   When \(\mu\) or \(\rho\) is not absolutely continuous, the discussion above gives
   \[
-    W_p(\mu_{\varepsilon}, \nu_{\varepsilon})
-    \leq W_p(\mu_{\varepsilon}, \rho_{\varepsilon}) + W_p(\rho_{\varepsilon}, \nu_{\varepsilon}),
+    \Wdist_p(\mu_{\varepsilon}, \nu_{\varepsilon})
+    \leq \Wdist_p(\mu_{\varepsilon}, \rho_{\varepsilon}) + \Wdist_p(\rho_{\varepsilon}, \nu_{\varepsilon}),
   \]
   where \(\mu_{\varepsilon}, \nu_{\varepsilon}, \rho_{\varepsilon}\) are as defined in \Cref{prop:Wdist-convolution}.
   The same Lemma then allows us to pass to the limit.
@@ -579,18 +601,201 @@ When this is not true, we can approximate \(\mu\) and \(\rho\) with absolutely c
 
 
 \subsection{Topology of the Wasserstein Space}
-As with dealing with the triangular inequality, we will split into the case \(p = 1\) and \(p \in (1, +\infty)\).
-\draftnote[TODO]{Add}
+The punchline of this section is a characterization of convergence in the Wasserstein space in terms of weak convergence of measures and convergence of moments.
 
-\begin{theorem}
-  If \(\Omega \subset \RR^d\) is bounded and \(p \in [1, +\infty)\), then \(W_p(\mu_n, \mu) \to 0\) if and only if \(\mu_n \weakto \mu\).
+Let us start by recalling that the weak topology is the coarsest topology that makes \(\mu \mapsto \int \varphi \dd \mu\) continuous for each \(\varphi \in C_b\).
+For an arbitrary class of functions \(\cF\) we can similarly define a ``\(\cF\)-weak topology'' to be the coarsest topology that makes \(\mu \mapsto \int \varphi \dd \mu\) continuous for each \(\varphi \in \cF\).
+We have the following:
+\begin{lemma}\label{prop:weak-topology}
+  Let \(X\) be a metric space.
+  Convergence in the \(\Lip\)-weak topology implies convergence in the weak topology.
+  % On \(\Pspace(X)\), the weak topology is stronger than the \(\Lip\)-weak topology.
+  % Moreover, if \(X\) is bounded, then the weak topology coincides with the \(\Lip\)-weak topology on \(\Pspace(X)\).
+  In particular, to establish \(\mu_n \weakto \mu\), we need only check that \(\int \varphi \dd \mu_n \to \int \varphi \dd \mu\) for each each \(\varphi \in \Lip(X)\).
+\end{lemma}
+\begin{proof}
+  % Since \(C_c \subset C_b\), we need only check that \(C_c\)-weak convergence implies weak convergence.
+  % To that end, let \(\psi \in C_b\) be arbitrary and find large \(M\) such that \(\psi + M \geq 0\).
+  % Then define \(\varphi_n \coloneqq \ind_{[-n, n]^d} \cdot (\psi + M)\).
+  % Note that \(\varphi_n\) are nonnegative and converges pointwise monotonically to \(\psi + M\).
+  % The functionals
+  % \[
+  %   F_n: \mu \longmapsto \int \varphi_n \dd \mu
+  % \]
+  % are continuous and in particular l.s.c.\ in the \(C_c\)-weak topology.
+  % By the Monotone Convergence Theorem, \(F_n\) converges pointwise monotonically to
+  % \[
+  %   F: \mu \longmapsto \int \psi + M \dd \mu = M + \int \psi \dd \mu.
+  % \]
+  % As the pointwise supremum of a sequence of continuous functions, \(F\) and in particular \(F_0: \mu \mapsto  \int \psi \dd \mu\) is l.s.c.\ in the \(C_c\)-weak topology.
+  % Repeating the same argument on \(-\psi \in C_b\), we see that \(F_0\) is also u.s.c.
+  % % \(\mu \mapsto \int -\psi \dd \mu\) is l.s.c.\ and so \(F\) is also u.s.c.
+  % Being both l.s.c.\ and u.s.c., it must be continuous.
+  % Since \(\psi \in C_b\) is arbitrary, we may conclude.
+  %
+  % Now, if \(X\) is bounded, we have \(\Lip(X) \subset C_b(X)\).
+  % We may proceed as above for the other direction, using \Cref{prop:lsc-approx-by-uc} to get our sequence of approximating Lipschitz functions.
+  Let \(\psi \in C_b\) be arbitrary and find large \(M\) such that \(\psi + M \geq 0\).
+  Using \Cref{prop:lsc-approx-by-uc}, find a sequence of nonnegative Lipschitz functions \(\varphi_n\) such that \(\varphi_n \nearrow \psi + M\).
+  The functionals
+  \[
+    F_n: \mu \longmapsto \int \varphi_n \dd \mu
+  \]
+  are continuous and in particular l.s.c.\ in the \(\Lip\)-weak topology.
+  By the Monotone Convergence Theorem, \(F_n\) converges pointwise monotonically to
+  \[
+    F: \mu \longmapsto \int \psi + M \dd \mu = M + \int \psi \dd \mu.
+  \]
+  As the pointwise supremum of a sequence of continuous functions, \(F\) and in particular \(F_0: \mu \mapsto  \int \psi \dd \mu\) is l.s.c.\ in the \(\Lip\)-weak topology.
+  Repeating the same argument on \(-\psi \in C_b\), we see that \(F_0\) is also u.s.c.
+  % \(\mu \mapsto \int -\psi \dd \mu\) is l.s.c.\ and so \(F\) is also u.s.c.
+  Being both l.s.c.\ and u.s.c., it must be continuous.
+  Since \(\psi \in C_b\) is arbitrary, we may conclude.
+\end{proof}
+
+
+
+We are now ready to characterize convergence in the Wasserstein space.
+We start with the bounded case:
+\begin{theorem}\label{prop:Wspace-topology-bounded}
+  If \(\Omega \subset \RR^d\) is bounded and \(p \in [1, +\infty)\), then \(\Wdist_p(\mu_n, \mu) \to 0\) if and only if \(\mu_n \weakto \mu\).
 \end{theorem}
+\begin{proof}
+  \Cref{prop:Wdist-top-equiv} shows that all \(\Wdist_p\) induce the same topology on \(\Pspace(\Omega)\).
+  Thus it suffices to consider the case \(p = 1\).
+  Consider first a sequence of measures \(\mu_n\) converging to \(\mu\) in \(\Wspace_1(\Omega)\).
+  The Kantorovich-Rubinstein Theorem implies that
+  \[
+    \lim_n \sup \left\{ \int \varphi \dd (\mu_n - \mu) : \varphi \in \Lip_1 \right\} = 0
+  \]
+  and, in particular,
+  \[
+    \int \varphi \dd \mu_n \longrightarrow \int \varphi \dd \mu, \quad \forall \varphi \in \Lip_1.
+  \]
+  By linearity, the same is true for any Lipschitz function.
+  By \Cref{prop:weak-topology}, we have \(\mu_n \weakto \mu\).
+
+  For the opposite implication, fix \(\mu_n \weakto \mu\) and let \(\varphi_n \in \Lip_1\) be such that
+  \[
+    \Wdist_1(\mu_n, \mu)
+    = \int \varphi_n \dd (\mu_n - \mu).
+  \]
+  Fix an arbitrary \(x_0 \in \Omega\).
+  Since the value of the integral above is unchanged when we add a constant to \(\varphi_n\), the functions \(\varphi_n\) can be chosen such that \(\varphi_{n}(x_0)\) is the same for each \(n\).
+  Using the facts that \(\Omega\) is bounded and \(\varphi_n\) are 1-Lipschitz, we know that the sequence \(\varphi_n\) are equibounded and equicontinuous.
+  By Arzela-Ascoli, we can pick a subsequence of \(\varphi_n\) that attains \(\limsup \Wdist_1(\mu_n, \nu)\), and then choose a further subsequence say \(\varphi_{n_k}\) that converges uniformly say to \(\varphi\).
+  Note that
+  \begin{align*}
+    0
+    \leq \liminf \Wdist_1(\mu_n, \mu)
+    &\leq \limsup \Wdist_1(\mu_n, \mu) \\
+    &= \lim_k \Wdist_1(\mu_{n_k}, \mu)
+    = \lim_k \int \varphi_{n_k} \dd (\mu_{n_k} - \mu).
+  \end{align*}
+  It is thus sufficient to show that the last limit is \(0\).
+  For this, we use the following estimate:
+  \begin{align*}
+    \abs*{\int \varphi_{n_k} \dd (\mu_{n_k} - \mu)}
+    &\leq \abs*{\int \varphi \dd (\mu_{n_k} - \mu)} + \abs*{\int \varphi_{n_k} - \varphi \dd (\mu_{n_k} - \mu)} \\
+    &\leq \abs*{\int \varphi \dd (\mu_{n_k} - \mu)} + \norm*{\varphi_{n_k} - \varphi}_{\infty} \left[\mu_{n_k}(\Omega) + \mu(\Omega)\right].
+  \end{align*}
+  As we send \(k \to \infty\), the first term converges to \(0\) by the weak convergence of \(\mu_{n_k}\), and the second term converges to \(0\) by the uniform converges of \(\varphi_{n_k}\).
+\end{proof}
 
 
 \begin{theorem}
   Let \(p \in [1, +\infty)\).
-  We have \(W_p(\mu_n, \mu) \to 0\) if and only if \(\mu_n \weakto \mu\) and \(\int \abs{x}^p \dd \mu_n \to \int \abs{x}^p \dd \mu\).
+  We have \(\Wdist_p(\mu_n, \mu) \to 0\) if and only if \(\mu_n \weakto \mu\) and \(\int \abs{x}^p \dd \mu_n \to \int \abs{x}^p \dd \mu\).
 \end{theorem}
+\begin{proof}
+  First let \(\mu_n\) converge to \(\mu\) in \(\Wspace_p(\Omega)\).
+  \Cref{prop:Wdist-top-equiv} gives \(W_1(\mu_n, \mu) \to 0\).
+  Then the same argument in \Cref{prop:Wspace-topology-bounded} can be used to show that \(\mu_n \weakto \mu\).
+  The convergence in \(p\)-moments follows from noting that
+  \[
+    \int \abs{x}^p \dd \mu_n
+    = \Wdist_p(\mu_n, \delta_0)
+    \longrightarrow W_p(\mu, \delta_0)
+    = \int \abs{x}^p \dd \mu.
+  \]
+
+  For the opposite direction, fix a sequence \(\mu_n \weakto \mu\) such that \(\int \abs{x}^p \dd \mu_n \to \int \abs{x}^p \dd \mu\).
+  Denote as \(K_k\) the closed ball of radius \(k\) centered around \(0\) and let \(\pi_k\) be the projection map onto \(K_k\).
+  Note that \(\pi_k\) is 1-Lipschitz and in particular continuous.
+  % We have further
+  % \[
+  %   \abs{\pi_k(x) - x} = \begin{cases}
+  %     0, & x \in K_k, \\
+  %     \abs{x} - k, & x \notin K_k.
+  %   \end{cases}
+  % \]
+
+  Let \(\mu^k \coloneqq (\pi_k)_{\#} \mu\) and define \(\mu_n^k\) analogously.
+  Note that since \(\mu^k, \mu_n^k \in \Pspace(K_k)\), \Cref{prop:Wspace-topology-bounded} may be used once we check \(\mu_n^k \weakto \mu^k\): for each \(\varphi \in C_b(K_k)\) we have
+  \[
+    \int \varphi \dd \mu_n^k
+    = \int \varphi \circ \pi_k \dd \mu_n
+    \longrightarrow \int \varphi \circ \pi_k \dd \mu
+    = \int \varphi \dd \mu^k.
+  \]
+  Thus we have \(\Wdist(\mu_n^k, \mu^k) \to 0\).
+
+  We will use this to bound \(\Wdist_p(\mu_n, \mu)\) via the estimate
+  % \begin{equation}\label{prop:Wspace-topology:eqn:Wdist-estimate}
+  \[
+    \Wdist_p(\mu_n, \mu)
+    \leq \Wdist_p(\mu_n, \mu_n^k)
+    + \Wdist_p(\mu_n^k, \mu^k)
+    + \Wdist_p(\mu, \mu^k).
+  \]
+  % \end{equation}
+  For fixed \(k\), the discussion above shows that the middle term converges to \(0\) when \(n \to \infty\).
+  We need only bound the first and last term.
+  Consider first the term \(\Wdist(\mu, \mu^k)\).
+  Using the transport map \(x \mapsto \pi_k(x)\), we have
+  \[
+    \Wdist_p(\mu, \mu^k)
+    \leq \int_{\Omega} \abs{\pi_k - \Id}^p \dd \mu
+    \leq \int_{K_k^\complement} \abs{\Id}^p \dd \mu
+    \leq \int_{\Omega} \abs{x}^p \dd \mu - \int_{K_k} \abs{x}^p \dd \mu.
+  \]
+  Since \(\int \abs{x}^p \dd \mu < +\infty\), we have by the Monotone Convergence Theorem that the last term converges to \(0\) when we send \(k \to \infty\).
+  In particular, \(\lim_{k \to \infty} \Wdist_p(\mu, \mu^k) = 0\).
+
+  Next, we bound the term \(\Wdist_p(\mu_n, \mu_n^k)\).
+  Again using \(x \mapsto \pi_k(x)\) as a transportation map gives
+  \begin{align*}
+    \Wdist_p(\mu_n, \mu_n^k)
+    \leq \int \abs{\pi_k - \Id}^p \dd\mu_n
+    &\leq \int \abs{x - \min\left\{x, k\right\}}^p \dd\mu_n\\
+    &\leq \int \abs{x}^p - \abs{\min\left\{x, k\right\}}^p \dd\mu_n,
+  \end{align*}
+  where the last inequality follows from the fact that \(x \mapsto x^p\) is superadditive on \(x \geq 0\).
+  Since \(\min\left\{x, k \right\}\) is continuous and bounded and \(\lim_n \int \abs{x}^p \dd\mu_n = \int \abs{x}^p \dd\mu\), the last term converges to \(\int \abs{x}^p - \abs{\min\left\{x, k \right\}}^p \dd \mu\) as we send \(n \to \infty\).
+  On the other hand, from the Monotone Convergence Theorem we know that \(\int \abs{x}^p - \abs{\min\left\{x, k \right\}}^p \dd \mu\) converges to \(0\) when \(k \to \infty\).
+  In particular, for any \(\varepsilon > 0\), we can find large \(k_0\) and \(n_0\) such that \(\Wdist_p(\mu_n, \mu_n^k) < \varepsilon\) whenever \(k \geq k_0\) and \(n \geq n_0\).
+
+  We now put the separate estimates together.
+  % on each term in (\ref{prop:Wspace-topology:eqn:Wdist-estimate}) 
+  First, fix \(\varepsilon\) and choose large \(k_0\) and \(n_0\) as above.
+  Next, increase \(k_0\) if necessary so that \(\Wdist(\mu, \mu^{k_0}) < \varepsilon\).
+  % Next, fix this \(k\) and choose large \(N\) such that we have the following for each \(n \geq N\) we have
+  % \begin{gather*}
+  %   \int \abs{x}^p - \abs{\min\left\{x, k\right\}}^p \dd\mu_n
+  %   \leq \int \abs{x}^p - \abs{\min\left\{x, k \right\}}^k \dd \mu + \varepsilon
+  %   < 2\varepsilon.
+  % \end{gather*}
+  We have
+  \begin{align*}
+    \limsup \Wdist_p(\mu_n, \mu)
+    &\leq \limsup_n \left[ \Wdist_p(\mu_n, \mu_n^k)
+      + \Wdist_p(\mu_n^k, \mu^k)
+      + \Wdist_p(\mu, \mu^k) \right] \\
+    &\leq 2\varepsilon + \limsup_n \Wdist_p(\mu_n^k, \mu^k)
+    = 2\varepsilon.
+  \end{align*}
+  Since \(\varepsilon > 0\) is arbitrary, we conclude that \(\Wdist_p(\mu_n, \mu) \to 0\).
+\end{proof}
 
 
 
@@ -667,8 +872,6 @@ Equivalence of weak and distributional solutions to the CE.
 
 
 
-
-
 \section{AC curves in the Wasserstein Space and the Benamou-Brenier Formula}
 \begin{theorem}
   Let \((\mu_t)_{t \in [0, 1]}\) be an absolutely continuous curve in \(\Wspace(\Omega)\), where \(p > 1\) and \(\Omega \subset \RR^d\) is compact.
@@ -676,6 +879,35 @@ Equivalence of weak and distributional solutions to the CE.
 
   Conversely, if \((\mu_t)_{t \in [0, 1]}\) is a family of measures in \(\Pspace_p(\Omega)\) and for each \(t\) we have a vector field \(v_t \in L^p(\mu_t; \RR^d)\) with \(\int_0^1 \abs{v_t}_{L^p(\mu_t)} \dd t < +\infty\) solving \(\partial_t \mu_t + \divg (v_t \mu_t) = 0\), then \((\mu_t)_t\) is absolutely continuous in \(\Wspace(\Omega)\) and for a.e.\ \(t\), we have \(\abs{\mu'}(t) \leq \norm{v_t}_{L^p(\mu_t)}\).
 \end{theorem}
+
+
+
+Define \(\pi_t: \Omega \times \Omega \to \Omega\) by
+\[
+  \pi_t(x, y) \coloneqq (1 - t) x + t y.
+\]
+
+\begin{theorem}[\(\Wspace_p(\Omega)\) is a Geodesic Space]
+  Let \(\Omega\) be convex and \(p \geq 1\).
+  Let \(\mu, \nu \in \Pspace_p(\Omega)\) and let \(\gamma\) be the optimal transport plan corresponding to \(\Wdist_p(\mu, \nu)\).
+  The curve \(\mu_t \coloneqq (\pi_t)_{\#} \gamma\) is a constant-speed geodesic in \(\Wspace_p\) between \(\mu\) and \(\nu\).
+\end{theorem}
+
+
+\begin{theorem}[Benamou-Brenier Formula]
+  Let \(p > 1\) and \(\Omega\) be convex and compact.
+  For each \(\mu, \nu \in \Pspace_p(\Omega)\), we have
+  \[
+    \Wdist_p^p(\mu, \nu)
+    = \min\left\{
+    \int_0^1 \int_{\Omega} \abs{v_t}^p \dd \mu_t \dd t:
+    \partial_t \mu_t + \divg(v_t \mu_t) = 0, \quad \mu_0 = \mu, \quad \mu_1 = \nu
+    \right\}.
+  \]
+\end{theorem}
+
+
+
 
 
 
